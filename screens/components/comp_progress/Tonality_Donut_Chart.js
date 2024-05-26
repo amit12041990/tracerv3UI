@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import WebView from 'react-native-webview';
-import { Colors_Profile } from '../../constant/Colors';
+import { Colors_Profile } from '../../../constant/Colors';
 
 const Tonality_Donut_Chart = () => {
     var options = {

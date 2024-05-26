@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const History_Range_chart = () => {
+const Google = () => {
   return (
     <View>
-      <Text>History_Range_chart</Text>
+      <Text>Google</Text>
     </View>
   )
 }
 
-export default History_Range_chart
+export default Google

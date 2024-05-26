@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import WebView from 'react-native-webview'
-import { Colors_Profile } from '../../constant/Colors'
+import { Colors_Profile } from '../../../constant/Colors'
 
 
 const Progress_Bar_Chart = () => {

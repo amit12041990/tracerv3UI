@@ -2,7 +2,7 @@ import { View, Text,StyleSheet,Dimensions,TextInput, Button, Pressable, Alert,Im
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { Colors_Profile } from '../constant/Colors'
+import { Colors_Profile } from '../../constant/Colors'
 import { Picker } from '@react-native-picker/picker'
 
 
@@ -20,7 +20,7 @@ const Login_Screen = () => {
  <SafeAreaView>
  <View style={{backgroundColor:Colors_Profile.background,height:height}}>
     <Text style={styles.head_text}>Tracer App</Text>
-    <Image style={styles.head_img} source={require('../assets/user_photo.png')}/>
+    <Image style={styles.head_img} source={require('../../assets/user_photo.png')}/>
     <View style={{flex:1,alignItems:'center',width:'100%',paddingHorizontal:40,gap:5,margin:5}}>
     <Text style={[styles.head_text2,{alignSelf:'flex-start'}]}>Welcome</Text>
     <TextInput

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View,Text } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { Colors_Profile } from '../../constant/Colors';
+import { Colors_Profile } from '../../../constant/Colors';
 import { Button } from 'react-native-paper';
 import Tonality_Emotion_Progress_Bar from './Tonality_Emotion_Bar';
 

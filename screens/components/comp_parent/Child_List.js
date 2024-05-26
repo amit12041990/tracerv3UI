@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Modal, TextInput, Platform } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Modal, TextInput, Platform, Pressable } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 const Childs_Card = ({ child }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,10 +23,12 @@ const Childs_Card = ({ child }) => {
   };
 
   const handleDateChange = (event, selectedDate) => {
-    setDatePickerVisibility(Platform.OS === 'ios'); // Keep the picker open on iOS until user confirms
     if (selectedDate) {
       const formattedDate = selectedDate.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
       handleEditChange('dob', formattedDate);
+      setDatePickerVisibility(false); // Close the picker
+    } else {
+      setDatePickerVisibility(false); // Close the picker
     }
   };
 
@@ -56,6 +59,7 @@ const Childs_Card = ({ child }) => {
             <Text style={styles.btnText}>Delete</Text>
           </TouchableOpacity>
         </View>
+      
       </View>
 
       <Modal
@@ -79,9 +83,9 @@ const Childs_Card = ({ child }) => {
               value={editChild.gender}
               onChangeText={(text) => handleEditChange('gender', text)}
             />
-            <TouchableOpacity onPress={showDatePicker} style={styles.dateButton}>
-              <Text style={styles.dateButtonText}>Select DOB</Text>
-            </TouchableOpacity>
+            <Pressable onPress={showDatePicker} style={styles.datePicker}>
+              <Text>{new Date(editChild.dob).toDateString()}</Text>
+            </Pressable>
             {isDatePickerVisible && (
               <DateTimePicker
                 value={new Date(editChild.dob || Date.now())}
@@ -190,13 +194,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 10,
   },
-  dateButton: {
+  datePicker: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#007bff",
-    padding: 10,
     borderRadius: 10,
     marginBottom: 10,
   },
-  dateButtonText: {
+  datePickerText: {
     color: "#fff",
     fontWeight: "bold",
     textAlign: "center",

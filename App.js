@@ -1,21 +1,25 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { BottomNavigation, Text } from 'react-native-paper';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider as PaperProvider } from 'react-native-paper';
+import Login_Screen from './screens/auth/Login_Screen';
 
-import Login_Screen from './screens/Login_Screen';
-import Grammer_Screen from './screens/Grammer_Screen';
-import Usage_History from './screens/Usage_History';
-import Parent_Screen from './screens/Parent_Screen';
+import Parent_Screen from './screens/admin/Parent_Screen';
+import Grammer_Screen from './screens/admin/Grammer_Screen';
+import TagCloud_Screen from './screens/admin/TagCloud_Screen';
+import Pages_History from './screens/admin/Pages_History';
+
+import UserPage from './screens/child/UserPage';
+import Google from './screens/child/webview_apps/Google';
+import Youtube from './screens/child/webview_apps/Youtube';
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
 
-const loginRoute = () => <Login_Screen />;
-const GrammerRoute = () => <Grammer_Screen />;
-const ParentRoute = () => <Parent_Screen/>
-const HistoryRoute = () => <Usage_History/>;
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -25,6 +29,8 @@ const App = () => {
   });
 
   const [appIsReady, setAppIsReady] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -35,35 +41,42 @@ const App = () => {
 
   useEffect(() => {
     onLayoutRootView();
+    // Example condition to check if user is admin (you can replace this with your authentication logic)
+    // For demo, assuming user is admin if isAdmin state is set to true
+    setIsAdmin(true); // Set to true for admin, false for regular user
+    setIsLoggedIn(true); // Set to true when user is logged in
   }, [onLayoutRootView]);
 
-  
-
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: 'login', title: 'Login', focusedIcon: 'heart', unfocusedIcon: 'heart-outline' },
-    { key: 'grammer', title: 'Language', focusedIcon: 'keyboard-variant',unfocusedIcon:'keyboard-variant' },
-    { key: 'parent', title: 'parent', focusedIcon: 'account',unfocusedIcon: 'account-outline' },
-    { key: 'history', title: 'Usage History', focusedIcon: 'timeline', unfocusedIcon: 'timeline-outline' },
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    login: loginRoute,
-    grammer: GrammerRoute,
-    parent: ParentRoute,
-    history: HistoryRoute,
-  });
   if (!appIsReady) {
     return null; // Render nothing while the app is loading
   }
+
   return (
-    <SafeAreaProvider>
-      <BottomNavigation
-        navigationState={{ index, routes }}
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-      />
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <PaperProvider>
+        <SafeAreaProvider>
+          <Stack.Navigator>
+            {isLoggedIn ? (
+              <>
+                {isAdmin ? (
+                  <>
+                    <Stack.Screen name="Parent" component={Parent_Screen} options={{headerShown:false}} />
+                    <Stack.Screen name="progress" component={Grammer_Screen} options={{headerShown:false}} />
+                    <Stack.Screen name="tags" component={TagCloud_Screen} options={{headerShown:false}} />
+                    <Stack.Screen name="activities" component={Pages_History} options={{headerShown:false}} />
+                 
+                  </>
+                ) : (
+                  <Stack.Screen name="UserPage" component={UserPage} options={{headerShown:false}}/>
+                )}
+              </>
+            ) : (
+              <Stack.Screen name="Login" component={Login_Screen} options={{headerShown:false}}/>
+            )}
+          </Stack.Navigator>
+        </SafeAreaProvider>
+      </PaperProvider>
+    </NavigationContainer>
   );
 };
 

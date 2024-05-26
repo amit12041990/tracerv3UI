@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { Colors_Profile } from '../../constant/Colors';
+import { Colors_Profile } from '../../../constant/Colors';
 import WebView from 'react-native-webview';
 
 const Emotion_Donut_Chart = () => {
