@@ -10,32 +10,12 @@ const { height } = Dimensions.get("window");
 
 export default function Pages_History() {
   const data = [
-    { time: '2023-05-01T10:00:00Z', url: 'https://example.com/1', sec: 30 },
-    { time: '2023-05-01T10:30:00Z', url: 'https://example.com/2', sec: 45 },
-    { time: '2023-05-02T11:00:00Z', url: 'https://example.com/3', sec: 60 },
-    { time: '2023-06-03T11:00:00Z', url: 'https://example.com/4', sec: 160 },
-    { time: '2023-05-01T10:00:00Z', url: 'https://example.com/1', sec: 30 },
-    { time: '2023-06-03T10:30:00Z', url: 'https://example.com/2', sec: 45 },
-    { time: '2023-05-01T11:00:00Z', url: 'https://example.com/3', sec: 60 },
-    { time: '2023-06-05T11:00:00Z', url: 'https://example.com/4', sec: 160 },
-    { time: '2023-05-01T10:00:00Z', url: 'https://example.com/1', sec: 30 },
-    { time: '2023-05-01T10:30:00Z', url: 'https://example.com/2', sec: 45 },
-    { time: '2023-05-02T11:00:00Z', url: 'https://example.com/3', sec: 60 },
-    { time: '2023-06-03T11:00:00Z', url: 'https://example.com/4', sec: 160 },
-    { time: '2023-05-21T10:00:00Z', url: 'https://example.com/1', sec: 30 },
-    { time: '2023-06-03T10:30:00Z', url: 'https://example.com/2', sec: 45 },
-    { time: '2023-05-01T11:00:00Z', url: 'https://example.com/3', sec: 60 },
-    { time: '2023-06-05T11:00:00Z', url: 'https://example.com/4', sec: 160 },
-    { time: '2023-05-01T10:00:00Z', url: 'https://example.com/1', sec: 30 },
-    { time: '2023-05-05T10:30:00Z', url: 'https://example.com/2', sec: 45 },
-    { time: '2023-05-02T11:00:00Z', url: 'https://example.com/3', sec: 60 },
-    { time: '2023-06-09T11:00:00Z', url: 'https://example.com/4', sec: 160 },
-    { time: '2023-05-11T10:00:00Z', url: 'https://example.com/1', sec: 30 },
-    { time: '2023-06-23T10:30:00Z', url: 'https://example.com/2', sec: 45 },
-    { time: '2023-05-01T11:00:00Z', url: 'https://example.com/3', sec: 60 },
-    { time: '2023-06-03T11:00:00Z', url: 'https://example.com/4', sec: 160 },
-    // Add more objects as needed
-  ];
+    { key: '2023-05-01T10:00:00Z_https://example.com/1', time: '2023-05-01T10:00:00Z', url: 'https://example.com/1', sec: 30 },
+    { key: '2023-05-01T10:30:00Z_https://example.com/2', time: '2023-05-01T10:30:00Z', url: 'https://example.com/2', sec: 45 },
+    { key: '2023-05-02T11:00:00Z_https://example.com/3', time: '2023-05-02T11:00:00Z', url: 'https://example.com/3', sec: 60 },
+    // Rest of the data
+];
+
 
   return (
     <SafeAreaView>

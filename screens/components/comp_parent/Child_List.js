@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Modal, TextInput, Platform, Pressable } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import { Colors_Profile } from "../../../constant/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const Childs_Card = ({ child }) => {
+  const navigation =useNavigation()
   const [modalVisible, setModalVisible] = useState(false);
   const [editChild, setEditChild] = useState(child);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -57,6 +59,17 @@ const Childs_Card = ({ child }) => {
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, styles.buttonDelete]}>
             <Text style={styles.btnText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.action,{backgroundColor:'#f5f5f8',paddingVertical:10}]}>
+          <TouchableOpacity style={styles.button_nav} onPress={() => navigation.navigate('progress')}>
+            <Text style={styles.nav_btn_text}>Progress</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button_nav} onPress={() => navigation.navigate('tags')}>
+            <Text style={styles.nav_btn_text}>Tags</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button_nav} onPress={() => navigation.navigate('activities')}>
+            <Text style={styles.nav_btn_text}>Activity</Text>
           </TouchableOpacity>
         </View>
       
@@ -152,6 +165,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
   },
+  button_nav: {
+   backgroundColor:'#fff',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+  },
   buttonDelete: {
     backgroundColor: "#ff4d4d",
   },
@@ -160,6 +179,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
   },
+  nav_btn_text:{
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#3498db",
+  },
+
   modalOverlay: {
     flex: 1,
     justifyContent: "center",
