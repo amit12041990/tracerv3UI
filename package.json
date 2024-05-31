@@ -31,7 +31,10 @@
     "react-native-webview": "13.8.6",
     "react-redux": "^9.1.2",
     "react-tagcloud": "^2.3.3",
-    "rn-wordcloud": "^1.0.3"
+    "rn-wordcloud": "^1.0.3",
+    "expo-clipboard": "~6.0.3",
+    "expo-dev-client": "~4.0.15",
+    "expo-build-properties": "~0.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

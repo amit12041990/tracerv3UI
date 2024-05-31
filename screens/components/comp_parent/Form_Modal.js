@@ -1,16 +1,20 @@
-import { View, Text, StyleSheet, Modal, Pressable, TextInput, Button,  Platform } from 'react-native';
+import { View, Text, StyleSheet, Modal, Pressable, TextInput, Button,  Platform, Alert } from 'react-native';
 import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker'
-
-const Form_Modal = () => {
+import { formatDate,validateChildData } from '../../../constant/tinyFunctions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { fetchAddChildByParentId } from '../../../redux/parentSlice';
+const Form_Modal = ({onChildDataUpdate}) => {
+    const dispatch =useDispatch()
     const [visible, setVisible] = useState(false);
     const [childName, setChildName] = useState('');
-    const [age, setAge] = useState('');
+
     const [gender, setGender] = useState('');
     const [dob, setDob] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
-
+    const [formErr,setFormErr]=useState('')
     const toggleModalVisibility = () => {
         setVisible(!visible);
     };
@@ -20,16 +24,43 @@ const Form_Modal = () => {
         setShowDatePicker(Platform.OS === 'ios');
         setDob(currentDate);
     };
-
-    const handleSubmit = () => {
+   const clearFormFeild = ()=>{
+    setChildName('')
+    setDob(new Date())
+    setGender('')
+   }
+    const handleSubmit = async () => {
         // Handle form submission
-        console.log({
-            childName,
-            age,
-            gender,
-            dob: dob.toDateString(),
-        });
-        toggleModalVisibility();
+        const userId = await AsyncStorage.getItem('userId');
+        const verify = validateChildData(childName,gender,dob)
+        if (verify.isValid ){
+            console.log(
+                childName,
+                gender,
+                formatDate(dob)
+            );
+            if(userId){
+                dispatch(fetchAddChildByParentId({
+                    id: userId,
+                    name: childName,
+                    gender: gender,
+                    dob: formatDate(dob)}))
+                .then(()=>{
+                    onChildDataUpdate();
+                    setFormErr('')
+                    toggleModalVisibility();
+                    clearFormFeild()
+                })
+                .catch(error=>console.log('Error Add Child',error))
+            }
+            
+        }else {
+            //Alert.alert('validation error',verify.message)
+            setFormErr(verify.message)
+        }
+        
+        
+        
     };
 
     return (
@@ -71,8 +102,10 @@ const Form_Modal = () => {
                                 onChange={handleDateChange}
                             />
                         )}
+                        <Text style={{color:'red'}}>{formErr??formErr}</Text>
                         <View style={{justifyContent:"space-between",flexDirection:'row',paddingHorizontal:10}}>
-                        <Pressable onPress={toggleModalVisibility}>
+                    
+                        <Pressable onPress={handleSubmit}>
                             <Text style={styles.btn}>Submit</Text>
                         </Pressable>
                         <Pressable onPress={toggleModalVisibility}>
